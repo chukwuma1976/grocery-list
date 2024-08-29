@@ -1,0 +1,20 @@
+img.enlarged {
+  height: 400px;
+}
+
+.PopUp {
+  position: fixed;
+
+  left: 30%;
+  top: 30%;
+
+  width: 40%;
+
+  border: 2px solid blue;
+  border-radius: 1em;
+  box-shadow: -2px 5px 5px blue;
+
+  background-color: white;
+
+  color: #011627;
+}
