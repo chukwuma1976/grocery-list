@@ -21,7 +21,7 @@ export const groceryCategories = [
 
 export const groceryItemsByCategory = [
     {
-        category: "Fruits ",
+        category: "Fruits",
         items: [
             'Apples',
             'Avocados',

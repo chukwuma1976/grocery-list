@@ -13,8 +13,7 @@ export default function AddGroceryItem({ items, updateItems, closeForm }) {
         const filtered =
             category !== "Other" ? groceryItemsByCategory.find(items => items.category === category).items
                 : [];
-        setFilteredSuggestions(() => filtered);
-        console.log(filtered);
+        setFilteredSuggestions(filtered);
     }
 
     function handleSubmitItem(event) {
