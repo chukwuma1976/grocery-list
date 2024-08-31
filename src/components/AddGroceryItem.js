@@ -1,10 +1,21 @@
 import { useState } from "react";
 import axios from "axios";
 import "../styles/add-grocery-items.css"
+import { groceryCategories, groceryItemsByCategory } from "../grocery-categories";
 
 export default function AddGroceryItem({ items, updateItems, closeForm }) {
     const [name, setName] = useState('');
     const [category, setCategory] = useState('Other');
+    const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+
+    function handleChangeCategory(category) {
+        setCategory(category);
+        const filtered =
+            category !== "Other" ? groceryItemsByCategory.find(items => items.category === category).items
+                : [];
+        setFilteredSuggestions(() => filtered);
+        console.log(filtered);
+    }
 
     function handleSubmitItem(event) {
         event.preventDefault();
@@ -21,25 +32,31 @@ export default function AddGroceryItem({ items, updateItems, closeForm }) {
     return (
         <div className="container">
             <form onSubmit={handleSubmitItem}>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Enter Category</label>
-                    <input
-                        type="text" class="form-control"
-                        id="exampleFormControlInput1"
-                        placeholder="Other"
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)} />
+                <div className="mb-3">
+                    <label htmlFor="exampleFormControlInput1" className="form-label">Enter a Category</label>
+                    <select className="form-select" aria-label="Select a category" onChange={(e) => handleChangeCategory(e.target.value)}>
+                        <option value="Other">Select a Category</option>
+                        {groceryCategories.map(category => <option key={category} value={category}>{category}</option>)}
+                    </select>
                 </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Enter Name of Grocery Item</label>
+                <div className="mb-3">
+                    <label for="exampleFormControlInput1" className="form-label">Enter Name of Grocery Item</label>
                     <input
                         type="text"
-                        class="form-control"
-                        id="exampleFormControlInput1"
+                        className="form-control"
+                        list="datalistOptions"
+                        id="nameFormControlInput"
                         placeholder="Enter a grocery item"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required />
+                    {filteredSuggestions.length > 0 && (
+                        <datalist id="datalistOptions">
+                            {filteredSuggestions.map((suggestion, index) => (
+                                <option key={index} value={suggestion} />
+                            ))}
+                        </datalist>
+                    )}
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>

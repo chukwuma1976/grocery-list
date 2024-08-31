@@ -9,6 +9,7 @@ export default function GroceryList() {
     const [groceryList, setGroceryList] = useState([]);
     const [showAddForm, setShowAddForm] = useState(false);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
+    const [updateId, setUpdateId] = useState('');
 
     useEffect(() => {
         axios.get(url)
@@ -23,14 +24,14 @@ export default function GroceryList() {
         setGroceryList(() => groceryList.filter(item => item.id !== id));
     }
 
-    function onUpdate(item) {
-        console.log(item);
+    function onUpdate(id) {
+        setUpdateId(id);
         setShowUpdateForm(true);
     }
 
     return (
         <div>
-            <button className="btn btn-primary" onClick={() => setShowAddForm(true)}>Add Grocery Item</button>
+            <button className="btn btn-success" onClick={() => setShowAddForm(true)}>Add Grocery Item</button>
             <PopUp showPopUp={showAddForm} closePopUp={() => setShowAddForm(false)}>
                 <AddGroceryItem
                     items={groceryList}
@@ -40,21 +41,23 @@ export default function GroceryList() {
             </PopUp>
             <h2 className="text-center">Grocery List</h2>
             {groceryList.map(item => {
-                return (<div className="d-flex justify-content-between">
-                    <p className="fs-5" key={item.id}>{item.name}</p>
-                    <div >
-                        <button type="button" className="btn btn-info btn-sm" onClick={() => onUpdate(item)}>Update</button>
-                        <button type="button" className="btn btn-danger btn-sm" onClick={() => onDelete(item.id)}>Delete</button>
-                    </div>
-                    <PopUp showPopUp={showUpdateForm} closePopUp={() => setShowUpdateForm(false)}>
-                        <UpdateGroceryItem
-                            item={item}
-                            items={groceryList}
-                            updateItems={setGroceryList}
-                            closeForm={() => setShowUpdateForm(false)}>
-                        </UpdateGroceryItem>
-                    </PopUp>
-                </div>)
+                return (
+                    <div key={item.id} className="d-flex justify-content-between">
+                        <p className="fs-5">{item.name}</p>
+                        <div >
+                            <button type="button" className="btn btn-info btn-sm" onClick={() => onUpdate(item.id)}>Update</button>
+                            <button type="button" className="btn btn-danger btn-sm" onClick={() => onDelete(item.id)}>Delete</button>
+                        </div>
+                        {updateId === item.id &&
+                            <PopUp showPopUp={showUpdateForm} closePopUp={() => setShowUpdateForm(false)}>
+                                <UpdateGroceryItem
+                                    item={item}
+                                    items={groceryList}
+                                    updateItems={setGroceryList}
+                                    closeForm={() => setShowUpdateForm(false)}>
+                                </UpdateGroceryItem>
+                            </PopUp>}
+                    </div>)
             }
             )}
         </div>

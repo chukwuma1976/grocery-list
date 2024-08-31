@@ -6,7 +6,7 @@ export default function UpdateGroceryItem({ item, items, updateItems, closeForm 
     const [name, setName] = useState(item.name);
     const { id, category } = item;
 
-    function handleSubmitItem(event) {
+    function handleUpdateItem(event) {
         event.preventDefault();
         const url = 'http://localhost:5000/groceries';
         axios.put(url + '/' + id, { id, name, category })
@@ -20,12 +20,12 @@ export default function UpdateGroceryItem({ item, items, updateItems, closeForm 
 
     return (
         <div className="container">
-            <form onSubmit={handleSubmitItem}>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Update Name of Grocery Item</label>
+            <form onSubmit={handleUpdateItem}>
+                <div className="mb-3">
+                    <label for="exampleFormControlInput1" className="form-label">Update Name of Grocery Item</label>
                     <input
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id="exampleFormControlInput1"
                         placeholder={name}
                         value={name}
