@@ -1,28 +1,19 @@
 import axios from "axios";
-import { useEffect, useState, useContext } from "react";
-import AddGroceryItem from "./AddGroceryItem";
+import { useState } from "react";
 import PopUp from "./PopUp";
 import UpdateGroceryItem from "./UpdateGroceryItem";
-import { GroceryContext } from "../App";
 
-export default function GroceryList() {
+export default function GroceryItemsByCategory({ items }) {
     const url = 'http://localhost:5000/groceries';
-    const { groceryList, setGroceryList } = useContext(GroceryContext);
-    const [showAddForm, setShowAddForm] = useState(false);
+    const [groceryItems, setGroceryItems] = useState(items);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [updateId, setUpdateId] = useState('');
-
-    useEffect(() => {
-        axios.get(url)
-            .then(res => setGroceryList(res.data))
-            .catch(err => console.log('Error: ', err));
-    }, [setGroceryList]);
 
     function onDelete(id) {
         axios.delete(url + '/' + id)
             .then(res => console.log(res.data))
             .catch(err => console.log(err))
-        setGroceryList(() => groceryList.filter(item => item.id !== id));
+        setGroceryItems(() => groceryItems.filter(item => item.id !== id));
     }
 
     function onUpdate(id) {
@@ -31,18 +22,9 @@ export default function GroceryList() {
     }
 
     return (
-        <div className="row d.block justify-content-center">
-            <div className="col-8">
-                <button className="btn btn-success" onClick={() => setShowAddForm(true)}>Add Grocery Item</button>
-                <PopUp showPopUp={showAddForm} closePopUp={() => setShowAddForm(false)}>
-                    <AddGroceryItem
-                        items={groceryList}
-                        updateItems={setGroceryList}
-                        closeForm={() => setShowAddForm(false)}>
-                    </AddGroceryItem>
-                </PopUp>
-                <h2 className="text-center">Grocery List</h2>
-                {groceryList.map(item => {
+        <div className="row d.block">
+            <div className="col-12">
+                {groceryItems.map(item => {
                     return (
                         <div key={item.id} className="d-flex justify-content-between">
                             <p className="fs-5">{item.name}</p>
@@ -54,8 +36,8 @@ export default function GroceryList() {
                                 <PopUp showPopUp={showUpdateForm} closePopUp={() => setShowUpdateForm(false)}>
                                     <UpdateGroceryItem
                                         item={item}
-                                        items={groceryList}
-                                        updateItems={setGroceryList}
+                                        items={groceryItems}
+                                        updateItems={setGroceryItems}
                                         closeForm={() => setShowUpdateForm(false)}>
                                     </UpdateGroceryItem>
                                 </PopUp>}

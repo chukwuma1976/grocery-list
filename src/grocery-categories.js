@@ -15,9 +15,8 @@ export const groceryCategories = [
     'Household and Cleaning',
     'Personal care',
     'Pet care',
-    'Baby products',
-    'Other'
-]
+    'Baby products'
+].sort();
 
 export const groceryItemsByCategory = [
     {
@@ -271,7 +270,7 @@ export const groceryItemsByCategory = [
         ]
     },
     {
-        category: 'Household and cleaning',
+        category: 'Household and Cleaning',
         items: [
             'Air freshener',
             'Aluminum foil',

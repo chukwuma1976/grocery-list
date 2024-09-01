@@ -11,8 +11,9 @@ export default function AddGroceryItem({ items, updateItems, closeForm }) {
     function handleChangeCategory(category) {
         setCategory(category);
         const filtered =
-            category !== "Other" ? groceryItemsByCategory.find(items => items.category === category).items
-                : [];
+            category !==
+                "Other" ? groceryItemsByCategory.find(items =>
+                    items.category.toLowerCase() === category.toLowerCase()).items.sort() : [];
         setFilteredSuggestions(filtered);
     }
 
@@ -36,10 +37,11 @@ export default function AddGroceryItem({ items, updateItems, closeForm }) {
                     <select className="form-select" aria-label="Select a category" onChange={(e) => handleChangeCategory(e.target.value)}>
                         <option value="Other">Select a Category</option>
                         {groceryCategories.map(category => <option key={category} value={category}>{category}</option>)}
+                        <option value="Other">Other</option>
                     </select>
                 </div>
                 <div className="mb-3">
-                    <label for="exampleFormControlInput1" className="form-label">Enter Name of Grocery Item</label>
+                    <label htmlFor="exampleFormControlInput1" className="form-label">Enter Name of Grocery Item</label>
                     <input
                         type="text"
                         className="form-control"

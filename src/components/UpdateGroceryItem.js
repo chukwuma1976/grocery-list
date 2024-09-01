@@ -22,7 +22,7 @@ export default function UpdateGroceryItem({ item, items, updateItems, closeForm 
         <div className="container">
             <form onSubmit={handleUpdateItem}>
                 <div className="mb-3">
-                    <label for="exampleFormControlInput1" className="form-label">Update Name of Grocery Item</label>
+                    <label htmlFor="exampleFormControlInput1" className="form-label">Update Name of Grocery Item</label>
                     <input
                         type="text"
                         className="form-control"

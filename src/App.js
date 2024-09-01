@@ -3,17 +3,27 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Header from './components/Header';
 import GroceryList from './components/GroceryList';
 import { useState } from 'react';
+import GroceryListByCategory from './components/GroceryListByCategory';
+import { createContext } from 'react';
+
+export const GroceryContext = createContext(null);
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
-  function triggerDarkMode() {
-    setDarkMode(!darkMode)
-  }
+  const [displayByCategory, setDisplayByCategory] = useState(false);
+  const [groceryList, setGroceryList] = useState([]);
+
   const darkClass = darkMode ? " bg-dark text-white" : ""
+
   return (
     <div className={"container" + darkClass}>
-      <Header triggerDarkMode={triggerDarkMode}></Header>
-      <GroceryList></GroceryList>
+      <Header
+        triggerDarkMode={() => setDarkMode(!darkMode)}
+        triggerDisplayByCategory={() => setDisplayByCategory(!displayByCategory)}>
+      </Header>
+      <GroceryContext.Provider value={{ groceryList: groceryList, setGroceryList: setGroceryList }}>
+        {displayByCategory ? <GroceryListByCategory></GroceryListByCategory> : <GroceryList></GroceryList>}
+      </GroceryContext.Provider>
     </div>
   );
 }
