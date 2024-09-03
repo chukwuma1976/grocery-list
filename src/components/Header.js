@@ -11,7 +11,7 @@ export default function Header({ triggerDarkMode }) {
 
     return (
         <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
-            <div className="container-fluid">
+            <div className="container">
                 <h1 className="navbar-brand">The Grocery List</h1>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
