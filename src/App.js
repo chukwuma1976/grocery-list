@@ -5,12 +5,13 @@ import GroceryList from './components/GroceryList';
 import { useState } from 'react';
 import GroceryListByCategory from './components/GroceryListByCategory';
 import { createContext } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import HomePage from './components/HomePage';
 
 export const GroceryContext = createContext(null);
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
-  const [displayByCategory, setDisplayByCategory] = useState(false);
   const [groceryList, setGroceryList] = useState([]);
 
   const darkClass = darkMode ? " bg-dark text-white" : ""
@@ -18,11 +19,15 @@ function App() {
   return (
     <div className={"container" + darkClass}>
       <Header
-        triggerDarkMode={() => setDarkMode(!darkMode)}
-        triggerDisplayByCategory={() => setDisplayByCategory(!displayByCategory)}>
+        triggerDarkMode={() => setDarkMode(!darkMode)}>
       </Header>
       <GroceryContext.Provider value={{ groceryList: groceryList, setGroceryList: setGroceryList }}>
-        {displayByCategory ? <GroceryListByCategory></GroceryListByCategory> : <GroceryList></GroceryList>}
+        <Routes>
+          <Route exact path='/' element={<HomePage />} />
+          <Route path='/grocery-home' element={<HomePage />} />
+          <Route path='/grocery-list' element={<GroceryList />} />
+          <Route path='/grocery-list-by-category' element={<GroceryListByCategory />} />
+        </Routes>
       </GroceryContext.Provider>
     </div>
   );
