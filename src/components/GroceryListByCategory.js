@@ -1,14 +1,11 @@
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { GroceryContext } from "../App";
-import AddGroceryItem from "./AddGroceryItem";
-import PopUp from "./PopUp";
 import GroceryItemsByCategory from "./GroceryItemsByCategory";
 
 export default function GroceryListByCategory() {
     const url = 'http://localhost:5000/groceries';
     const { groceryList, setGroceryList } = useContext(GroceryContext);
-    const [showAddForm, setShowAddForm] = useState(false);
     const [categories, setCategories] = useState({});
 
     useEffect(() => {
@@ -32,14 +29,6 @@ export default function GroceryListByCategory() {
     return (
         <div className="row d.block justify-content-center">
             <div className="col-8">
-                <button className="btn btn-success" onClick={() => setShowAddForm(true)}>Add Grocery Item</button>
-                <PopUp showPopUp={showAddForm} closePopUp={() => setShowAddForm(false)}>
-                    <AddGroceryItem
-                        items={groceryList}
-                        updateItems={setGroceryList}
-                        closeForm={() => setShowAddForm(false)}>
-                    </AddGroceryItem>
-                </PopUp>
                 <h2 className="text-center">Grocery List By Category</h2>
                 <div>
                     {Object.keys(categories).sort().map(catKey => {
