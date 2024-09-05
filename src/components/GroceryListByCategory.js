@@ -34,7 +34,7 @@ export default function GroceryListByCategory() {
                     {Object.keys(categories).sort().map(catKey => {
                         return (
                             <div key={catKey}>
-                                <h3 key={catKey} className="text-center">{catKey}</h3>
+                                <h3 key={catKey} className="text-center bg-light">{catKey}</h3>
                                 <GroceryItemsByCategory
                                     items={categories[catKey]}
                                     groceryList={groceryList}
