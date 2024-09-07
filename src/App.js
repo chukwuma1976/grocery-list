@@ -18,10 +18,8 @@ function App() {
 
   return (
     <div className={"container" + darkClass}>
-      <GroceryContext.Provider value={{ groceryList: groceryList, setGroceryList: setGroceryList }}>
-        <Header
-          triggerDarkMode={() => setDarkMode(!darkMode)}>
-        </Header>
+      <GroceryContext.Provider value={{ groceryList, setGroceryList }}>
+        <Header triggerDarkMode={() => setDarkMode(!darkMode)}></Header>
         <h1>&nbsp;</h1>
         <Routes>
           <Route exact path='/' element={<HomePage />} />

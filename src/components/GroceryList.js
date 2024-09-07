@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
-import AddGroceryItem from "./AddGroceryItem";
 import PopUp from "./PopUp";
 import UpdateGroceryItem from "./UpdateGroceryItem";
 import { GroceryContext } from "../App";
@@ -9,7 +8,6 @@ import GroceryToolTip from "./GroceryToolTip";
 export default function GroceryList() {
     const url = 'http://localhost:5000/groceries';
     const { groceryList, setGroceryList } = useContext(GroceryContext);
-    const [showAddForm, setShowAddForm] = useState(false);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [updateId, setUpdateId] = useState('');
 
@@ -34,20 +32,6 @@ export default function GroceryList() {
     return (
         <div className="row d.block justify-content-center">
             <div className="col-8">
-                <button className="btn btn-success" onClick={() => setShowAddForm(true)}>
-                    <GroceryToolTip id="add-to-list" title="Add Grocery Item">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-plus-fill" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5z" />
-                        </svg>
-                    </GroceryToolTip>
-                </button>
-                <PopUp showPopUp={showAddForm} closePopUp={() => setShowAddForm(false)}>
-                    <AddGroceryItem
-                        items={groceryList}
-                        updateItems={setGroceryList}
-                        closeForm={() => setShowAddForm(false)}>
-                    </AddGroceryItem>
-                </PopUp>
                 <h2 className="text-center">Grocery List</h2>
                 {groceryList.map(item => {
                     return (
